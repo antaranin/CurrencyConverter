@@ -6,6 +6,6 @@ namespace CurrencyConverter.Core.Services
     {
         List<string> ConversionCurrencies { get; }
 
-        string Convert(string preConvertAmount, int fromConvertPosition, int toConvertPosition);
+        string Convert(string preConvertAmount, string fromConvertType, string toConvertType);
     }
 }

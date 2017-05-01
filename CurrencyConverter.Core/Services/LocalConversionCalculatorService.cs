@@ -3,13 +3,13 @@ using System.Linq;
 
 namespace CurrencyConverter.Core.Services
 {
-    public class LocalConversionCalculator: IConversionCalculator
+    public class LocalConversionCalculatorService: IConversionCalculator
     {
         public List<string> ConversionCurrencies { get; }
 
         private readonly IDictionary<string, double> _toUsdConversions;
 
-        public LocalConversionCalculator()
+        public LocalConversionCalculatorService()
         {
             _toUsdConversions = new Dictionary<string, double>
             {

@@ -16,21 +16,76 @@ namespace CurrencyConverter.iOS.Views
     {
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UILabel Label { get; set; }
+        UIKit.UITextField AmountToConvertTF { get; set; }
 
         [Outlet]
         [GeneratedCode ("iOS Designer", "1.0")]
-        UITextField TextField { get; set; }
+        UIKit.UIButton ClosePickerButton { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIButton ConvertBtn { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel ConvertedAmountLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIPickerView CurrencyPicker { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel FromLabel { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UIView OverlayView { get; set; }
+
+        [Outlet]
+        [GeneratedCode ("iOS Designer", "1.0")]
+        UIKit.UILabel ToLabel { get; set; }
 
         void ReleaseDesignerOutlets ()
         {
-            if (Label != null) {
-                Label.Dispose ();
-                Label = null;
+            if (AmountToConvertTF != null) {
+                AmountToConvertTF.Dispose ();
+                AmountToConvertTF = null;
             }
-            if (TextField != null) {
-                TextField.Dispose ();
-                TextField = null;
+
+            if (ClosePickerButton != null) {
+                ClosePickerButton.Dispose ();
+                ClosePickerButton = null;
+            }
+
+            if (ConvertBtn != null) {
+                ConvertBtn.Dispose ();
+                ConvertBtn = null;
+            }
+
+            if (ConvertedAmountLabel != null) {
+                ConvertedAmountLabel.Dispose ();
+                ConvertedAmountLabel = null;
+            }
+
+            if (CurrencyPicker != null) {
+                CurrencyPicker.Dispose ();
+                CurrencyPicker = null;
+            }
+
+            if (FromLabel != null) {
+                FromLabel.Dispose ();
+                FromLabel = null;
+            }
+
+            if (OverlayView != null) {
+                OverlayView.Dispose ();
+                OverlayView = null;
+            }
+
+            if (ToLabel != null) {
+                ToLabel.Dispose ();
+                ToLabel = null;
             }
         }
     }
