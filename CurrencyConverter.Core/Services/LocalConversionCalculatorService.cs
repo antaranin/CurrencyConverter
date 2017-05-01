@@ -22,10 +22,10 @@ namespace CurrencyConverter.Core.Services
         }
 
         public string Convert(string preConvertAmount,
-            int fromConvertPosition, int toConvertPosition)
+            string fromConvertType, string toConvertType)
         {
             var amount = ConvertToNumber(preConvertAmount);
-            var ratio = CurrencyRatio(fromConvertPosition, toConvertPosition);
+            var ratio = CurrencyRatio(fromConvertType, toConvertType);
             var convertedAmount = amount * ratio;
             return ConvertToString(convertedAmount);
         }
@@ -42,17 +42,17 @@ namespace CurrencyConverter.Core.Services
             return number.ToString("N2");
         }
 
-        private double CurrencyRatio(int fromConvertPosition, int toConvertPosition)
+        private double CurrencyRatio(string fromConvertType, string toConvertType)
         {
-            var fromUsdRatio = ConvertPositionToToUsdRatio(fromConvertPosition);
-            var toUsdRatio = ConvertPositionToToUsdRatio(toConvertPosition);
+            var fromUsdRatio = ConvertCurrencyToUsdRatio(fromConvertType);
+            var toUsdRatio = ConvertCurrencyToUsdRatio(toConvertType);
 
             return fromUsdRatio / toUsdRatio;
         }
 
-        private double ConvertPositionToToUsdRatio(int convertPosition)
+        private double ConvertCurrencyToUsdRatio(string convertType)
         {
-            return _toUsdConversions[ConversionCurrencies[convertPosition]];
+            return _toUsdConversions[convertType];
         }
     }
 }

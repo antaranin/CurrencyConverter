@@ -4,7 +4,7 @@ using MvvmCross.Platform.Converters;
 
 namespace CurrencyConverter.Core.Converters
 {
-    public class PrefixValueConverte: MvxValueConverter<string, string>
+    public class PrefixValueConverter: MvxValueConverter<string, string>
     {
         protected override string Convert(string value, Type targetType, object parameter, CultureInfo culture)
         {
