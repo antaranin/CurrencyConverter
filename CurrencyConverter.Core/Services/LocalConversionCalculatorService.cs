@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using EnsureThat;
 
 namespace CurrencyConverter.Core.Services
 {
     public class LocalConversionCalculatorService: IConversionCalculator
     {
-        public List<string> ConversionCurrencies { get; }
-
         private readonly IDictionary<string, double> _toUsdConversions;
+        private readonly List<string> _conversionCurrencies;
 
         public LocalConversionCalculatorService()
         {
@@ -18,16 +19,26 @@ namespace CurrencyConverter.Core.Services
                 {"PLN", 0.26},
                 {"EUR", 1.09}
             };
-            ConversionCurrencies = _toUsdConversions.Keys.ToList();
+            _conversionCurrencies = _toUsdConversions.Keys.ToList();
         }
 
-        public string Convert(string preConvertAmount,
+        public Task<List<string>> GetConversionCurrencies()
+        {
+            return Task.FromResult(_conversionCurrencies);
+        }
+
+        public Task<string> Convert(string preConvertAmount,
             string fromConvertType, string toConvertType)
         {
+            Ensure.That(_conversionCurrencies)
+                .Any(x => x == fromConvertType)
+                .And()
+                .Any(x => x == toConvertType);
+
             var amount = ConvertToNumber(preConvertAmount);
             var ratio = CurrencyRatio(fromConvertType, toConvertType);
             var convertedAmount = amount * ratio;
-            return ConvertToString(convertedAmount);
+            return Task.FromResult(ConvertToString(convertedAmount));
         }
 
         private double ConvertToNumber(string currencyAmount)

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Diagnostics;
 using CurrencyConverter.Core.Services;
 using FluentAssertions;
 using MvvmCross.Core.ViewModels;
@@ -12,7 +13,6 @@ namespace CurrencyConverter.Core.ViewModels
         private readonly IConversionCalculator _conversionCalculator;
 
         public INC<List<string>> ConversionCurrencies = new NC<List<string>>();
-        public INC<string> PostConvertAmount = new NCString();
         public INC<bool> ShowCurrencyPicker = new NC<bool>();
 
         private SelectedCurrencyType _selectedCurrencyType = SelectedCurrencyType.None;
@@ -65,6 +65,7 @@ namespace CurrencyConverter.Core.ViewModels
                     .Contain(value);
 
                 SetProperty(ref _toConvertType, value);
+                RaisePropertyChanged(() => ProcessedPostConvertAmount);
                 Recalculate();
             }
         }
@@ -81,11 +82,33 @@ namespace CurrencyConverter.Core.ViewModels
             }
         }
 
+        private string _postConvertAmount = "0";
+        private string PostConvertAmount
+        {
+            get { return _postConvertAmount; }
+            set
+            {
+                _postConvertAmount = value;
+                RaisePropertyChanged(() => ProcessedPostConvertAmount);
+            }
+        }
+
+        public string ProcessedPostConvertAmount
+        {
+            get { return PostConvertAmount + " " + ToConvertType;  }
+        }
+
         public FirstViewModel(IConversionCalculator conversionCalculator)
         {
             _conversionCalculator = conversionCalculator;
             ShowCurrencyPicker.Value = false;
-            var conversionCurrencies = conversionCalculator.ConversionCurrencies;
+            var conversionCurrencies = conversionCalculator.GetConversionCurrencies();
+            conversionCurrencies.GetAwaiter().OnCompleted(() =>
+                LoadData(conversionCurrencies.Result));
+        }
+
+        private void LoadData(List<string> conversionCurrencies)
+        {
             ConversionCurrencies.Value = conversionCurrencies;
             ConversionCurrencies.Value.Should().NotBeEmpty();
             FromConvertType = conversionCurrencies[0];
@@ -100,6 +123,8 @@ namespace CurrencyConverter.Core.ViewModels
 
         public void SelectFromCurrencyType()
         {
+            if (ConversionCurrencies.Value == null)
+                return;
             _selectedCurrencyType = SelectedCurrencyType.FromCurrency;
             if (ConversionCurrencies.Value.Contains(FromConvertType))
                 CurrentSelectedCurrency = FromConvertType;
@@ -108,6 +133,8 @@ namespace CurrencyConverter.Core.ViewModels
 
         public void SelectToCurrencyType()
         {
+            if (ConversionCurrencies.Value == null)
+                return;
            _selectedCurrencyType = SelectedCurrencyType.ToCurrency;
             if(ConversionCurrencies.Value.Contains(ToConvertType))
                 CurrentSelectedCurrency = ToConvertType;
@@ -121,12 +148,9 @@ namespace CurrencyConverter.Core.ViewModels
                 || string.IsNullOrEmpty(ToConvertType))
                 return;
 
-            PostConvertAmount.Value =
-                _conversionCalculator.Convert(PreConvertAmount, FromConvertType, ToConvertType);
+            var conversionTask = _conversionCalculator.Convert(PreConvertAmount, FromConvertType, ToConvertType);
+            conversionTask.GetAwaiter().OnCompleted(() => PostConvertAmount = conversionTask.Result);
         }
-
-
-
     }
 
     enum SelectedCurrencyType

@@ -3,12 +3,12 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{1E1361FF-73A6-496B-ADF4-A7B8BAFB581B}</ProjectGuid>
+    <ProjectGuid>{5D195223-343D-44C8-A236-EDE2365E14E9}</ProjectGuid>
     <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <UseMSBuildEngine>true</UseMSBuildEngine>
     <OutputType>Library</OutputType>
-    <RootNamespace>CurrencyConverter.Core</RootNamespace>
-    <AssemblyName>CurrencyConverter.Core</AssemblyName>
+    <RootNamespace>CurrencyConverter.DataLayer</RootNamespace>
+    <AssemblyName>CurrencyConverter.DataLayer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
   </PropertyGroup>
@@ -28,13 +28,16 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Converters\PrefixValueConverter.cs" />
+    <Compile Include="IRepositories\IConversionRepository.cs" />
+    <Compile Include="IRepositories\IConversionsGroupRepository.cs" />
+    <Compile Include="IRepositories\IDataOperation.cs" />
+    <Compile Include="IRepositories\IRepository.cs" />
+    <Compile Include="IRepositories\IDataOperationService.cs" />
+    <Compile Include="Model\ConversionRate.cs" />
+    <Compile Include="Model\ConversionsGroup.cs" />
+    <Compile Include="Model\IDeepCloneable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Services\IConversionCalculatorService.cs" />
-    <Compile Include="Services\LocalConversionCalculatorService.cs" />
-    <Compile Include="Services\OnlineCalculatorService.cs" />
-    <Compile Include="ViewModels\FirstViewModel.cs" />
-    <Compile Include="App.cs" />
+    <Compile Include="Repositories\RealmRepository.cs" />
     <Compile Include="EnsureThat\TypeParam.cs" />
     <Compile Include="EnsureThat\Throws.cs" />
     <Compile Include="EnsureThat\StringExtensions.cs" />
@@ -57,36 +60,25 @@
     <Compile Include="EnsureThat\ComparableExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="MvvmCross.Platform">
-      <HintPath>..\packages\MvvmCross.Platform.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.Core">
-      <HintPath>..\packages\MvvmCross.Core.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.Binding">
-      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Binding.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.Localization">
-      <HintPath>..\packages\MvvmCross.Binding.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.Localization.dll</HintPath>
-    </Reference>
-    <Reference Include="MvvmCross.FieldBinding">
-      <HintPath>..\packages\MvvmCross.Plugin.FieldBinding.4.4.0\lib\portable-net45+win+wpa81+wp80\MvvmCross.FieldBinding.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions.Core">
-      <HintPath>..\packages\FluentAssertions.4.19.2\lib\portable-net40+sl5+win8+wp8+wpa81\FluentAssertions.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="FluentAssertions">
-      <HintPath>..\packages\FluentAssertions.4.19.2\lib\portable-net40+sl5+win8+wp8+wpa81\FluentAssertions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
+    <None Include="FodyWeavers.xml" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\CurrencyConverter.DataLayer\CurrencyConverter.DataLayer.csproj">
-      <Project>{5D195223-343D-44C8-A236-EDE2365E14E9}</Project>
-      <Name>CurrencyConverter.DataLayer</Name>
-    </ProjectReference>
+    <Reference Include="Realm.DataBinding">
+      <HintPath>..\packages\Realm.DataBinding.1.1.0\lib\netstandard1.0\Realm.DataBinding.dll</HintPath>
+    </Reference>
+    <Reference Include="Realm">
+      <HintPath>..\packages\Realm.Database.1.2.1\lib\portable-net45+sl5+wp8+wpa81+win8+monoandroid+Xamarin.iOS10+monotouch+Xamarin.Mac\Realm.dll</HintPath>
+    </Reference>
+    <Reference Include="Realm.Sync">
+      <HintPath>..\packages\Realm.1.2.1\lib\portable-net45+sl5+wp8+wpa81+win8+monoandroid+Xamarin.iOS10+monotouch+Xamarin.Mac\Realm.Sync.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable">
+      <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+  <Import Project="..\packages\Fody.2.0.6\build\portable-net+sl+win+wpa+wp\Fody.targets" Condition="Exists('..\packages\Fody.2.0.6\build\portable-net+sl+win+wpa+wp\Fody.targets')" />
+  <Import Project="..\packages\Realm.Database.1.2.1\build\Realm.Database.targets" Condition="Exists('..\packages\Realm.Database.1.2.1\build\Realm.Database.targets')" />
+  <Import Project="..\packages\Realm.1.2.1\build\Realm.targets" Condition="Exists('..\packages\Realm.1.2.1\build\Realm.targets')" />
 </Project>

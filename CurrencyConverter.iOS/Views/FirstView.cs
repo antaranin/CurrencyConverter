@@ -1,5 +1,7 @@
+using System.Diagnostics;
 using CurrencyConverter.Core.Converters;
 using CurrencyConverter.Core.ViewModels;
+using FluentAssertions;
 using MvvmCross.Binding.BindingContext;
 using MvvmCross.Binding.iOS.Views;
 using MvvmCross.iOS.Views;
@@ -65,7 +67,7 @@ namespace CurrencyConverter.iOS.Views
 
             set.Bind(ConvertedAmountLabel)
                 .For(v => v.Text)
-                .To(vm => vm.PostConvertAmount)
+                .To(vm => vm.ProcessedPostConvertAmount)
                 .OneWay();
 
             set.Apply();

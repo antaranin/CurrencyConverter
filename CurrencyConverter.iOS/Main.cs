@@ -1,4 +1,5 @@
-﻿using UIKit;
+﻿using EnsureThat;
+using UIKit;
 
 namespace CurrencyConverter.iOS
 {
@@ -9,6 +10,9 @@ namespace CurrencyConverter.iOS
 		{
 			// if you want to use a different Application Delegate class from "AppDelegate"
 			// you can specify it here.
+			#if !DEBUG
+				Ensure.Off();
+			#endif
 			UIApplication.Main(args, null, "AppDelegate");
 		}
 	}
