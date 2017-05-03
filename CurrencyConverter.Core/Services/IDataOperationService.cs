@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Linq.Expressions;
+using CurrencyConverter.DataLayer.IRepositories;
 
-namespace CurrencyConverter.DataLayer.IRepositories
+namespace CurrencyConverter.Core.Services
 {
     public interface IDataOperationService
     {

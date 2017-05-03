@@ -1,7 +1,8 @@
 ﻿using System;
 using CurrencyConverter.DataLayer.IRepositories;
+using CurrencyConverter.DataLayer.Repositories;
 
-namespace CurrencyConverter.DataLayer.Repositories
+namespace CurrencyConverter.Core.Services
 {
     public class DataOperationService: IDataOperationService
     {

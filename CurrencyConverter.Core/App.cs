@@ -1,6 +1,8 @@
 using System.Linq;
 using CurrencyConverter.Core.Services;
 using CurrencyConverter.Core.ViewModels;
+using CurrencyConverter.DataLayer.IRepositories;
+using CurrencyConverter.DataLayer.Repositories;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 
@@ -15,9 +17,10 @@ namespace CurrencyConverter.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
-            Mvx.RegisterSingleton<IConversionCalculator>(new LocalConversionCalculatorService());
+            Mvx.LazyConstructAndRegisterSingleton<IDataOperationService, DataOperationService>();
+            Mvx.LazyConstructAndRegisterSingleton<IConversionCalculator, OnlineCalculatorService>();
 
-            RegisterAppStart<ViewModels.FirstViewModel>();
+            RegisterAppStart<FirstViewModel>();
         }
     }
 }
