@@ -37,6 +37,10 @@
     <Compile Include="Model\ConversionsGroup.cs" />
     <Compile Include="Model\IDeepCloneable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\DataOperation.cs" />
+    <Compile Include="Repositories\DataOperationService.cs" />
+    <Compile Include="Repositories\RealmConversionGroupRepository.cs" />
+    <Compile Include="Repositories\RealmConversionRepository.cs" />
     <Compile Include="Repositories\RealmRepository.cs" />
     <Compile Include="EnsureThat\TypeParam.cs" />
     <Compile Include="EnsureThat\Throws.cs" />

@@ -7,7 +7,9 @@ namespace CurrencyConverter.DataLayer.IRepositories
     {
         void RunOperation(Action<IDataOperation> dataOperation);
 
-        IDataOperation BeginOperation();
+        void RunTransactionOperation(Action<IDataOperation> transactionOperation);
+
+        //IDataOperation CreateOperation();
     }
 
 }

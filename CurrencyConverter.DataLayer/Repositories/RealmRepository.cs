@@ -11,7 +11,7 @@ namespace CurrencyConverter.DataLayer.Repositories
 {
     public class Repository<T> : IRepository<T> where T : RealmObject, IDeepCloneable<T>
     {
-        private Realm _realm;
+        protected Realm _realm;
         public Repository(Realm realm)
         {
             Ensure.That(realm).IsNotNull();
