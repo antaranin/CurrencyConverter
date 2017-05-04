@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter.iOS", "Cu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter.DataLayer", "CurrencyConverter.DataLayer\CurrencyConverter.DataLayer.csproj", "{5D195223-343D-44C8-A236-EDE2365E14E9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CurrencyConverter.Droid", "CurrencyConverter.Droid\CurrencyConverter.Droid.csproj", "{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -53,5 +55,17 @@ Global
 		{5D195223-343D-44C8-A236-EDE2365E14E9}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{5D195223-343D-44C8-A236-EDE2365E14E9}.Debug|iPhone.ActiveCfg = Debug|Any CPU
 		{5D195223-343D-44C8-A236-EDE2365E14E9}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Release|iPhone.Build.0 = Release|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{A66A4991-CADD-47EF-8901-2E3EDE5F1F92}.Debug|iPhone.Build.0 = Debug|Any CPU
 	EndGlobalSection
 EndGlobal

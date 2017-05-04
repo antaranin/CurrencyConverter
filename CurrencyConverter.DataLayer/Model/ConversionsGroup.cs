@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using MoreLinq;
 using Realms;
 
@@ -21,9 +20,11 @@ namespace CurrencyConverter.DataLayer.Model
                     Date = Date,
                     BaseConversionName = BaseConversionName,
                 };
-            if (innerDepth > 0)
+
+            if (innerDepth != 0)
                 ConversionRates.ForEach(
                     cr => group.ConversionRates.Add(cr.DeepClone(innerDepth - 1)));
+
             return group;
         }
     }

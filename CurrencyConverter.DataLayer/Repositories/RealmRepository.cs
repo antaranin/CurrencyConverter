@@ -56,7 +56,7 @@ namespace CurrencyConverter.DataLayer.Repositories
         public void Upsert(T insertObject)
         {
             Ensure.That(Realm.IsClosed).IsFalse();
-            Realm.Add(insertObject, true);
+            Realm.Add(insertObject.DeepClone(-1), true);
         }
 
         public void Update(Action<T> updateOperation, Expression<Func<T, bool>> whereClause)

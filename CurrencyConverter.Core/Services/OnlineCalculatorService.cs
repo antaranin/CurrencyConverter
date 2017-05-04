@@ -58,10 +58,55 @@ namespace CurrencyConverter.Core.Services
             return group.Date.Date == DateTime.Today;
         }
 
-        public Task<string> Convert(string preConvertAmount, string fromConvertType,
-            string toConvertType)
+        public Task<string> Convert(string preConvertAmount,
+            string fromConvertType, string toConvertType)
         {
-            throw new System.NotImplementedException();
+            return Task.Run(
+                () => ConvertCurrencies(preConvertAmount, fromConvertType, toConvertType));
+        }
+
+        private string ConvertCurrencies(string preConvertAmount,
+            string fromConvertType, string toConvertType)
+        {
+            if (_conversionsGroup == null)
+                return "0";
+
+            Ensure.That(_conversionsGroup.ConversionRates)
+                .Any(x => x.ConversionName == fromConvertType)
+                .And()
+                .Any(x => x.ConversionName == toConvertType);
+
+            var amount = ConvertToNumber(preConvertAmount);
+            var ratio = CurrencyRatio(fromConvertType, toConvertType);
+            var convertedAmount = amount * ratio;
+            return ConvertToString(convertedAmount);
+        }
+
+        private double ConvertToNumber(string currencyAmount)
+        {
+            double value;
+            var success = double.TryParse(currencyAmount, out value);
+            return success ? value : 0;
+        }
+
+        private string ConvertToString(double number)
+        {
+            return number.ToString("N2");
+        }
+
+        private double CurrencyRatio(string fromConvertType, string toConvertType)
+        {
+            var fromBaseRatio = ConvertCurrencyToBaseRatio(fromConvertType);
+            var toBaseRatio = ConvertCurrencyToBaseRatio(toConvertType);
+
+            return toBaseRatio / fromBaseRatio;
+        }
+
+        private double ConvertCurrencyToBaseRatio(string convertType)
+        {
+            return _conversionsGroup.ConversionRates
+                .First(cr => cr.ConversionName == convertType)
+                .BaseConversionRate;
         }
 
         private void AddNewestConversionGroup(ConversionsGroup conversionsGroup)

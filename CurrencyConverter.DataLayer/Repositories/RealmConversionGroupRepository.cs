@@ -15,7 +15,8 @@ namespace CurrencyConverter.DataLayer.Repositories
 
         public ConversionsGroup FindLatest(int depth)
         {
-            return Realm.All<ConversionsGroup>().MaxBy(m => m.Date).DeepClone(depth);
+            var query = Realm.All<ConversionsGroup>();
+            return !query.Any() ? null : query.MaxBy(m => m.Date).DeepClone(depth);
         }
     }
 }

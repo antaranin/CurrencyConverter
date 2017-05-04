@@ -1,0 +1,7 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+
+<resources>
+    <dimen name="inter_view_margin">24dp</dimen>
+    <dimen name="app_side_margin">50dp</dimen>
+    <dimen name="typical_text_size">24sp</dimen>
+</resources>
