@@ -134,13 +134,13 @@ namespace CurrencyConverter.Droid
 			public const int convert_amount_et = 2131034114;
 			
 			// aapt resource value: 0x7f050003
-			public const int from_amount_tv = 2131034115;
+			public const int from_spinner = 2131034115;
 			
 			// aapt resource value: 0x7f050005
 			public const int result_tv = 2131034117;
 			
 			// aapt resource value: 0x7f050004
-			public const int to_amount_tv = 2131034116;
+			public const int to_spinner = 2131034116;
 			
 			static Id()
 			{

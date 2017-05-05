@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Immutable;
+using System.Diagnostics;
 using System.Linq;
 using System.Linq.Expressions;
 using CurrencyConverter.DataLayer.IRepositories;
@@ -55,8 +56,11 @@ namespace CurrencyConverter.DataLayer.Repositories
 
         public void Upsert(T insertObject)
         {
+            Debug.WriteLine("Upserting object => " + insertObject);
             Ensure.That(Realm.IsClosed).IsFalse();
-            Realm.Add(insertObject.DeepClone(-1), true);
+            Ensure.That(insertObject.IsManaged).IsFalse();
+            var clone = insertObject.DeepClone(-1);
+            Realm.Add(clone, true);
         }
 
         public void Update(Action<T> updateOperation, Expression<Func<T, bool>> whereClause)

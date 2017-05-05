@@ -42,8 +42,9 @@ namespace CurrencyConverter.Core.Services
 
             var group =  new ConversionsGroup
             {
+                Id = Guid.NewGuid().ToString(),
                 BaseConversionName = netConversionGroup.@base,
-                Date = netConversionGroup.date
+                Date = DateTimeOffset.Now
             };
 
             var rates = netConversionGroup.rates;
@@ -53,6 +54,7 @@ namespace CurrencyConverter.Core.Services
                 var name = convRate.Name;
                 group.ConversionRates.Add(new ConversionRate
                 {
+                    Id = Guid.NewGuid().ToString(),
                     BaseConversionRate = value,
                     ConversionName = name
                 });
@@ -99,7 +101,7 @@ namespace CurrencyConverter.Core.Services
         class NetConversionGroup
         {
             public string @base { get; set; }
-            public DateTime date { get; set; }
+            public DateTimeOffset date { get; set; }
             public Rates rates { get; set; }
         }
 }

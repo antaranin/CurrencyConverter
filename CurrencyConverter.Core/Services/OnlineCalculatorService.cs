@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using CurrencyConverter.DataLayer.IRepositories;
@@ -28,9 +29,11 @@ namespace CurrencyConverter.Core.Services
 
         private async Task<List<string>> ExtractConversionCurrencies()
         {
+            Debug.WriteLine("Starting conversion group => " + _conversionsGroup);
             if (_conversionsGroup == null)
                 _conversionsGroup = GetLatestConversionGroup();
 
+            Debug.WriteLine("Database conversion group => " + _conversionsGroup);
             if (_conversionsGroup != null && IsConversionGroupUpToDate(_conversionsGroup))
                 return GenerateConversionCurrencies(_conversionsGroup);
 
@@ -39,6 +42,7 @@ namespace CurrencyConverter.Core.Services
                 return GenerateConversionCurrencies(_conversionsGroup);
 
             _conversionsGroup = providedGroup;
+            Debug.WriteLine("Online conversion group => " + _conversionsGroup);
             AddNewestConversionGroup(providedGroup);
 
             return GenerateConversionCurrencies(_conversionsGroup);
@@ -55,7 +59,8 @@ namespace CurrencyConverter.Core.Services
         private bool IsConversionGroupUpToDate(ConversionsGroup group)
         {
             Ensure.That(group).IsNotNull();
-            return group.Date.Date == DateTime.Today;
+            //This checks if this is the same day, no point querying multiple times a day
+            return group.Date.Date == DateTimeOffset.Now.Date;
         }
 
         public Task<string> Convert(string preConvertAmount,
@@ -121,11 +126,13 @@ namespace CurrencyConverter.Core.Services
 
         private ConversionsGroup GetLatestConversionGroup()
         {
+            Debug.WriteLine("Getting latest conversion group");
             ConversionsGroup group = null;
             _dataOperationService.RunOperation(operation =>
             {
                 var groupRepo = operation.ConversionsGroupRepository;
-                group = groupRepo.FindLatest(1);
+                group = groupRepo.FindLatest(-1);
+                Debug.WriteLine("Found latest => " + group);
             });
 
             return group;
