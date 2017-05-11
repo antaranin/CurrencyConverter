@@ -104,7 +104,8 @@ namespace CurrencyConverter.Core.ViewModels
             ShowCurrencyPicker.Value = false;
             var conversionCurrencies = conversionCalculator.GetConversionCurrencies();
             conversionCurrencies.GetAwaiter().OnCompleted(() =>
-                LoadData(conversionCurrencies.Result));
+                LoadData(conversionCurrencies.Result)
+            );
         }
 
         private void LoadData(List<string> conversionCurrencies)

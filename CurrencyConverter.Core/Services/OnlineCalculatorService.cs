@@ -120,7 +120,7 @@ namespace CurrencyConverter.Core.Services
             _dataOperationService.RunTransactionOperation(operation =>
             {
                 var groupRepo = operation.ConversionsGroupRepository;
-                groupRepo.Upsert(conversionsGroup);
+                groupRepo.Insert(conversionsGroup);
             });
         }
 

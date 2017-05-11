@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Immutable;
 using System.Linq.Expressions;
-using CurrencyConverter.Core.Services;
+using CurrencyConverter.DataLayer.IRepositories;
 using CurrencyConverter.DataLayer.Model;
 using MoreLinq;
 using SQLite;

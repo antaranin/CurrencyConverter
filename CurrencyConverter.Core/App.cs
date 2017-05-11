@@ -1,8 +1,5 @@
-using System.Linq;
 using CurrencyConverter.Core.Services;
 using CurrencyConverter.Core.ViewModels;
-using CurrencyConverter.DataLayer.IRepositories;
-using CurrencyConverter.DataLayer.Repositories;
 using MvvmCross.Platform;
 using MvvmCross.Platform.IoC;
 
@@ -17,7 +14,7 @@ namespace CurrencyConverter.Core
                 .AsInterfaces()
                 .RegisterAsLazySingleton();
 
-            Mvx.LazyConstructAndRegisterSingleton<IDataOperationService, DataOperationService>();
+            Mvx.LazyConstructAndRegisterSingleton<IDataOperationService, SqliteDataOperationService>();
             Mvx.LazyConstructAndRegisterSingleton<IConversionCalculator, OnlineCalculatorService>();
 
             RegisterAppStart<FirstViewModel>();

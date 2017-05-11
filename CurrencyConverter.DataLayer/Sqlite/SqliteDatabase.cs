@@ -1,4 +1,5 @@
 ﻿using CurrencyConverter.DataLayer.Model;
+using CurrencyConverter.DataLayer.Sqlite.Model;
 using SQLite;
 
 namespace CurrencyConverter.DataLayer.Sqlite
@@ -12,8 +13,8 @@ namespace CurrencyConverter.DataLayer.Sqlite
         private SqliteDatabase(string dbPath)
         {
             Database = new SQLiteConnection(dbPath);
-            Database.CreateTable<ConversionRate>();
-            Database.CreateTable<ConversionsGroup>();
+            Database.CreateTable<SqliteConversionRate>();
+            Database.CreateTable<SqliteConversionGroup>();
         }
 
         public static SqliteDatabase GetInstance(string dbPath)

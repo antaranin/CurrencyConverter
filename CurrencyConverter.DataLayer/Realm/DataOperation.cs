@@ -1,14 +1,14 @@
 ﻿using System;
-using CurrencyConverter.Core.Services;
 using CurrencyConverter.DataLayer.IRepositories;
 using EnsureThat;
 using Realms;
 
-namespace CurrencyConverter.DataLayer.Repositories
+namespace CurrencyConverter.DataLayer.Realm
 {
     public class DataOperation: IDataOperation
     {
-        private readonly Realm _realm = Realm.GetInstance();
+        private const int RealmVersion = 1;
+        private readonly Realms.Realm _realm;
         private Transaction _transaction;
 
         public bool IsTransaction { get { return _transaction != null; } }
@@ -28,11 +28,19 @@ namespace CurrencyConverter.DataLayer.Repositories
 
         public DataOperation()
         {
+            var realmConfig = new RealmConfiguration
+            {
+                ShouldDeleteIfMigrationNeeded = true,
+                SchemaVersion = RealmVersion
+            };
+            _realm = Realms.Realm.GetInstance(realmConfig);
+
             _conversionRepository =
                 new Lazy<IConversionRepository>(() => new RealmConversionRepository(_realm));
             _conversionsGroupRepository =
                 new Lazy<IConversionsGroupRepository>(
-                    () => new RealmConversionGroupRepository(_realm));
+                    () => new RealmConversionGroupRepository(_realm)
+            );
         }
 
         public void RunAsTransaction()

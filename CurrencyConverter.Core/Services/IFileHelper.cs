@@ -1,4 +1,4 @@
-﻿namespace Todo
+﻿namespace CurrencyConverter.Core.Services
 {
 	public interface IFileHelper
 	{

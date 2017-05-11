@@ -1,5 +1,4 @@
 ﻿using System;
-using CurrencyConverter.Core.Services;
 
 namespace CurrencyConverter.DataLayer.IRepositories
 {

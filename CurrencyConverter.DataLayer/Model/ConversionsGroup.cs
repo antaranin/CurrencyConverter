@@ -12,7 +12,7 @@ namespace CurrencyConverter.DataLayer.Model
         public string Id { get; set; }
         public DateTimeOffset Date { get; set; }
         public string BaseConversionName { get; set; }
-        //The realm getter handles this
+        //The realm getter handles its creation this
         public IList<ConversionRate> ConversionRates { get; }
 
         public ConversionsGroup DeepClone(int innerDepth)

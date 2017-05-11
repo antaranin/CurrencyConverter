@@ -31,7 +31,6 @@
     <Compile Include="IRepositories\IConversionRepository.cs" />
     <Compile Include="IRepositories\IConversionsGroupRepository.cs" />
     <Compile Include="IRepositories\IDataOperation.cs" />
-    <Compile Include="IRepositories\IRepository.cs" />
     <Compile Include="Model\ConversionRate.cs" />
     <Compile Include="Model\ConversionsGroup.cs" />
     <Compile Include="Model\IDeepCloneable.cs" />
@@ -59,8 +58,9 @@
     <Compile Include="Realm\DataOperation.cs" />
     <Compile Include="Realm\RealmConversionGroupRepository.cs" />
     <Compile Include="Realm\RealmConversionRepository.cs" />
-    <Compile Include="Realm\RealmRepository.cs" />
-    <Compile Include="Sqlite\IFileHelper.cs" />
+    <Compile Include="Sqlite\ConversionRateDatabaseHelper.cs" />
+    <Compile Include="Sqlite\Model\SqliteConversionGroup.cs" />
+    <Compile Include="Sqlite\Model\SqliteConversionRate.cs" />
     <Compile Include="Sqlite\SqliteConversionGroupRepository.cs" />
     <Compile Include="Sqlite\SqliteConversionRepository.cs" />
     <Compile Include="Sqlite\SqliteDatabase.cs" />
@@ -101,6 +101,15 @@
     </Reference>
     <Reference Include="SQLite-net">
       <HintPath>..\packages\sqlite-net-pcl.1.2.1\lib\portable-net45+wp8+wpa81+win8+MonoAndroid10+MonoTouch10+Xamarin.iOS10\SQLite-net.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Primitives">
+      <HintPath>..\packages\System.ComponentModel.Primitives.4.3.0\lib\netstandard1.0\System.ComponentModel.Primitives.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.TypeConverter">
+      <HintPath>..\packages\System.ComponentModel.TypeConverter.4.3.0\lib\netstandard1.0\System.ComponentModel.TypeConverter.dll</HintPath>
+    </Reference>
+    <Reference Include="AutoMapper">
+      <HintPath>..\packages\AutoMapper.6.0.2\lib\netstandard1.1\AutoMapper.dll</HintPath>
     </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />

@@ -1,10 +1,6 @@
-﻿using CurrencyConverter.DataLayer.IRepositories;
-using CurrencyConverter.DataLayer.Model;
-
-namespace CurrencyConverter.Core.Services
+﻿namespace CurrencyConverter.DataLayer.IRepositories
 {
-    public interface IConversionRepository : IRepository<ConversionRate>
+    public interface IConversionRepository
     {
-
     }
 }

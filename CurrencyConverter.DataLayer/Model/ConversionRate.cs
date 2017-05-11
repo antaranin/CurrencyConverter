@@ -5,7 +5,7 @@ namespace CurrencyConverter.DataLayer.Model
 {
     public class ConversionRate: RealmObject, IDeepCloneable<ConversionRate>
     {
-        [SQLite.PrimaryKey, Realms.PrimaryKey]
+        [Realms.PrimaryKey]
         public string Id { get; set; }
         public string ConversionName { get; set; }
         public double BaseConversionRate { get; set; }

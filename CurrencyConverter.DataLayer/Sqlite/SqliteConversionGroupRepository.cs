@@ -1,10 +1,11 @@
-﻿using System;
-using System.Collections.Immutable;
-using System.Linq.Expressions;
+﻿using System.Collections.Generic;
+using System.Linq;
+using AutoMapper;
 using CurrencyConverter.DataLayer.IRepositories;
 using CurrencyConverter.DataLayer.Model;
-using SQLite.Net;
-using SQLiteConnection = SQLite.SQLiteConnection;
+using CurrencyConverter.DataLayer.Sqlite.Model;
+using MoreLinq;
+using SQLite;
 
 namespace CurrencyConverter.DataLayer.Sqlite
 {
@@ -15,49 +16,49 @@ namespace CurrencyConverter.DataLayer.Sqlite
         {
         }
 
-        public ConversionsGroup GetSingle(Expression<Func<ConversionsGroup, bool>> whereClause, int depth = 0)
+        public void Insert(ConversionsGroup conversionsGroup)
         {
-            throw new NotImplementedException();
-        }
+            var mapperConfig =
+                new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<ConversionsGroup, SqliteConversionGroup>();
+                    cfg.CreateMap<ConversionRate, SqliteConversionRate>();
+                });
 
-        public ConversionsGroup GetByPrimaryKey(string primaryKey, int depth = 0)
-        {
-            return
-        }
+            IMapper mapper = new Mapper(mapperConfig);
+            var sqliteGroup = mapper.Map<SqliteConversionGroup>(conversionsGroup);
+            var sqliteRates = mapper.Map<IList<ConversionRate>, List<SqliteConversionRate>>(conversionsGroup.ConversionRates);
+            sqliteRates.ForEach(it => it.ConversionGroupId = conversionsGroup.Id);
 
-        public ConversionsGroup GetByPrimaryKey(int primaryKey, int depth = 0)
-        {
-            throw new NotSupportedException("The ConversionsGroup does not have an integer primary key");
-        }
 
-        public ImmutableList<ConversionsGroup> GetMultiple(Expression<Func<ConversionsGroup, bool>> whereClause, int depth = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public ImmutableList<ConversionsGroup> GetAll(int depth = 0)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Upsert(ConversionsGroup insertObject)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Update(Action<ConversionsGroup> updateOperation, Expression<Func<ConversionsGroup, bool>> whereClause)
-        {
-            throw new NotImplementedException();
-        }
-
-        public void Delete(Expression<Func<ConversionsGroup, bool>> whereClause)
-        {
-            throw new NotImplementedException();
+            Database.Insert(sqliteGroup);
+            new ConversionRateDatabaseHelper().InsertRates(sqliteRates, Database);
         }
 
         public ConversionsGroup FindLatest(int depth)
         {
-            throw new NotImplementedException();
+            var groupTable = Database.Table<SqliteConversionGroup>();
+            if (!groupTable.Any())
+                return null;
+            var sqliteGroup = groupTable.MaxBy(x => x.Date);
+            var mapperConfig =
+                new MapperConfiguration(cfg =>
+                {
+                    cfg.CreateMap<SqliteConversionGroup, ConversionsGroup>();
+                    cfg.CreateMap<SqliteConversionRate, ConversionRate>();
+                });
+
+            IMapper mapper = new Mapper(mapperConfig);
+            var group = mapper.Map<ConversionsGroup>(sqliteGroup);
+
+            if (depth == 0)
+                return group;
+
+            var sqliteRates =
+                new ConversionRateDatabaseHelper().ExtractRatesByGroupId(group.Id, Database);
+            var rates = mapper.Map<IList<SqliteConversionRate>, List<ConversionRate>>(sqliteRates);
+            rates.ForEach(rate => group.ConversionRates.Add(rate));
+            return group;
         }
     }
 }

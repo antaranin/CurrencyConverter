@@ -1,8 +1,11 @@
-﻿using MvvmCross.Core.ViewModels;
+using System;
+using MvvmCross.Core.ViewModels;
 using MvvmCross.iOS.Platform;
 using MvvmCross.Platform;
 using Foundation;
+using CurrencyConverter.Core.Services;
 using UIKit;
+using System.IO;
 
 namespace CurrencyConverter.iOS
 {
@@ -23,11 +26,28 @@ namespace CurrencyConverter.iOS
 			setup.Initialize();
 
 			var startup = Mvx.Resolve<IMvxAppStart>();
+			Mvx.RegisterSingleton<IFileHelper>(new IosFileHelper());
 			startup.Start();
 
 			Window.MakeKeyAndVisible();
 
 			return true;
 		}
+	}
+}
+
+public class IosFileHelper : IFileHelper
+{
+	public string GetLocalFilePath(string filename)
+	{
+		string docFolder = Environment.GetFolderPath(Environment.SpecialFolder.Personal);
+		string libFolder = Path.Combine(docFolder, "..", "Library", "Databases");
+
+		if (!Directory.Exists(libFolder))
+		{
+			Directory.CreateDirectory(libFolder);
+		}
+
+		return Path.Combine(libFolder, filename);
 	}
 }

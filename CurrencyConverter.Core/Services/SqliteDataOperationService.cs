@@ -1,11 +1,17 @@
-﻿using System;
+using System;
 using CurrencyConverter.DataLayer.IRepositories;
-using CurrencyConverter.DataLayer.Realm;
+using CurrencyConverter.DataLayer.Sqlite;
 
 namespace CurrencyConverter.Core.Services
 {
-    public class DataOperationService: IDataOperationService
+    public class SqliteDataOperationService: IDataOperationService
     {
+        private readonly IFileHelper _fileHelper;
+        public SqliteDataOperationService(IFileHelper fileHelper)
+        {
+            _fileHelper = fileHelper;
+        }
+
         public void RunOperation(Action<IDataOperation> dataOperation)
         {
             using (var operation = CreateDataOperation())
@@ -25,7 +31,7 @@ namespace CurrencyConverter.Core.Services
 
         private IDataOperation CreateDataOperation()
         {
-            return new DataOperation();
+            return new SqliteDataOperation(_fileHelper.GetLocalFilePath("Database3"));
         }
     }
 }

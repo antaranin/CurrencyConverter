@@ -1,13 +1,13 @@
-﻿using CurrencyConverter.Core.Services;
-using CurrencyConverter.DataLayer.Model;
-using Realms;
+﻿using CurrencyConverter.DataLayer.IRepositories;
 
-namespace CurrencyConverter.DataLayer.Repositories
+namespace CurrencyConverter.DataLayer.Realm
 {
-    public class RealmConversionRepository: Repository<ConversionRate>, IConversionRepository
+    public class RealmConversionRepository: IConversionRepository
     {
-        public RealmConversionRepository(Realm realm) : base(realm)
+        private readonly Realms.Realm _realm;
+        public RealmConversionRepository(Realms.Realm realm)
         {
+            _realm = realm;
         }
     }
 }
