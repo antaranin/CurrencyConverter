@@ -4,12 +4,10 @@ namespace CurrencyConverter.DataLayer.Sqlite
 {
     public class SqliteRepository
     {
-        protected readonly SqliteDataOperation DataProvider;
         protected readonly SQLiteConnection Database;
 
-        public SqliteRepository(SqliteDataOperation dataProvider, SQLiteConnection database)
+        public SqliteRepository(SQLiteConnection database)
         {
-            DataProvider = dataProvider;
             Database = database;
         }
     }

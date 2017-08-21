@@ -11,20 +11,14 @@ namespace CurrencyConverter.DataLayer.Realm
         private readonly Realms.Realm _realm;
         private Transaction _transaction;
 
-        public bool IsTransaction { get { return _transaction != null; } }
+        public bool IsTransaction => _transaction != null;
 
         private Lazy<IConversionRepository> _conversionRepository;
 
-        public IConversionRepository ConversionRepository
-        {
-            get { return _conversionRepository.Value; }
-        }
+        public IConversionRepository ConversionRepository => _conversionRepository.Value;
 
         private Lazy<IConversionsGroupRepository> _conversionsGroupRepository;
-        public IConversionsGroupRepository ConversionsGroupRepository
-        {
-            get { return _conversionsGroupRepository.Value; }
-        }
+        public IConversionsGroupRepository ConversionsGroupRepository => _conversionsGroupRepository.Value;
 
         public DataOperation()
         {

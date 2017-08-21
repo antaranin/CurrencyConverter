@@ -6,42 +6,32 @@ namespace CurrencyConverter.DataLayer.Sqlite
     public class SqliteDataOperation : IDataOperation
     {
         private readonly SqliteDatabase _database;
-        private bool _isInTransaction;
 
-        public bool IsTransaction
-        {
-            get { return _isInTransaction; }
-        }
+        public bool IsTransaction { get; private set; }
 
-        private Lazy<IConversionRepository> _conversionRepository;
-        public IConversionRepository ConversionRepository
-        {
-            get { return _conversionRepository.Value; }
-        }
+        private readonly Lazy<IConversionRepository> _conversionRepository;
+        public IConversionRepository ConversionRepository => _conversionRepository.Value;
 
-    private Lazy<IConversionsGroupRepository> _conversionsGroupRepository;
+        private readonly Lazy<IConversionsGroupRepository> _conversionsGroupRepository;
 
-        public IConversionsGroupRepository ConversionsGroupRepository
-        {
-            get { return _conversionsGroupRepository.Value; }
-        }
+        public IConversionsGroupRepository ConversionsGroupRepository => _conversionsGroupRepository.Value;
 
         public SqliteDataOperation(string databasePath)
         {
             _database = SqliteDatabase.GetInstance(databasePath);
             _conversionRepository =
                 new Lazy<IConversionRepository>(
-                    () => new SqliteConversionRepository(this, _database.Database));
+                    () => new SqliteConversionRepository(_database.Database));
 
             _conversionsGroupRepository = new Lazy<IConversionsGroupRepository>(
-                () => new SqliteConversionGroupRepository(this, _database.Database));
+                () => new SqliteConversionGroupRepository(_database.Database));
         }
 
 
         public void RunAsTransaction()
         {
             _database.Database.BeginTransaction();
-            _isInTransaction = true;
+            IsTransaction = true;
 
         }
 

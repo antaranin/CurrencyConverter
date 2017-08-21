@@ -11,8 +11,8 @@ namespace CurrencyConverter.DataLayer.Sqlite
 {
     public class SqliteConversionGroupRepository: SqliteRepository, IConversionsGroupRepository
     {
-        public SqliteConversionGroupRepository(SqliteDataOperation dataProvider, SQLiteConnection database)
-            : base(dataProvider, database)
+        public SqliteConversionGroupRepository(SQLiteConnection database)
+            : base(database)
         {
         }
 

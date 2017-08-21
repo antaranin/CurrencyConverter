@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Windows.Input;
 using CurrencyConverter.Core.Services;
 using FluentAssertions;
 using MvvmCross.Core.ViewModels;
@@ -14,13 +15,13 @@ namespace CurrencyConverter.Core.ViewModels
 
         public INC<List<string>> ConversionCurrencies = new NC<List<string>>();
         public INC<bool> ShowCurrencyPicker = new NC<bool>();
+        
 
         private SelectedCurrencyType _selectedCurrencyType = SelectedCurrencyType.None;
-
         private string _currentSelectedCurrency = "";
         public string CurrentSelectedCurrency
         {
-            get { return _currentSelectedCurrency; }
+            get => _currentSelectedCurrency;
             set
             {
                 _selectedCurrencyType.Should()
